@@ -1,15 +1,14 @@
 <template>
-  <img alt="Vue logo" src="./assets/logo.png">
-  <HelloWorld msg="Welcome to Your Vue.js App"/>
+  <CheckListTree></CheckListTree>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import CheckListTree from './components/CheckListTree.vue'
 
 export default {
   name: 'App',
   components: {
-    HelloWorld
+    CheckListTree
   }
 }
 </script>
