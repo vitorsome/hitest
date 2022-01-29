@@ -1,19 +1,22 @@
 <template>
   <div class="tree" :level="level">
     <div class="option-tree" :style="{'margin-left': margin + 'px' }">
-      <input type="checkbox" @change="emitChangeSubtree" :id="id" />{{ item }}</div>
+      <input type="checkbox" @change="changeTree" :id="id" />{{ item }}</div>
       <TreeNode v-for="child in list" :key="child.id" :list="child.children" :item="child.name" :margin="(child.level * 30)" :id="child.id" :level="child.level"></TreeNode>
   </div>
 </template>
 <script>
+import Storage from '../storage.js';
+
 export default {
+  props:['list', 'item', 'margin', 'level', 'id'],
   data() {
     return {
       expanded:true
     }
   },
   methods: {
-    emitChangeSubtree(evt) {
+    changeTree(evt) {
       if (this.getParents(evt.target).filter(parent => parent.checked == true).length == 0 || this.getChildren(evt.target).length > 0) {
         if (evt.target.checked == true) {
           this.getChildren(evt.target).forEach(domElement => domElement.checked = true);
@@ -31,6 +34,10 @@ export default {
           });
         }
       }
+      Storage.setCheckboxesSelected(JSON.stringify({
+        checked: Array.from(document.querySelectorAll('input:checked')).map((checkbox) => checkbox.id),
+        indeterminate: Array.from(document.querySelectorAll('input:indeterminate')).map((checkbox) => checkbox.id)
+      }));
     },
     getParents(element) {
       let parents = [];
@@ -42,8 +49,7 @@ export default {
     getChildren(element) {
       return element.parentNode.parentNode.querySelectorAll('[type=checkbox]');
     }
-  },
-  props:['list', 'item', 'margin', 'level', 'id']
+  }
 }
 </script>
 
