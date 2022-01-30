@@ -1,4 +1,6 @@
 <template>
+  <h1>Prova frontend Hi Platform!</h1>
+  <p>Nome: Vitor Somenzi (<a target="_blank" href="https://github.com/vitorsome?tab=repositories">Github</a>)</p>
   <div class="checkboxes">
     <div>
       <TreeNode :list="list"></TreeNode>
@@ -54,9 +56,15 @@ export default {
 
 <style scoped>
 
+h1 {
+  text-align: center;
+}
+
 .checkboxes {
   display: flex;
   justify-content: center;
+  max-height: 600px;
+  overflow-y: scroll;
 }
 
 </style>
