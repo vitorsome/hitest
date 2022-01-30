@@ -32,11 +32,19 @@ export default {
       } catch (e) {
         Storage.setCheckboxesSelected([]);
       }
-      
+      this.setStyleCheckedCheckboxes();
+    },
+    setStyleCheckedCheckboxes() {
+      document.querySelectorAll('.selected').forEach(selected => selected.classList.remove('selected'));
+      let checkboxes = document.querySelectorAll('input:checked, input:indeterminate');
+      checkboxes.forEach((chkbox) => {
+        chkbox.parentNode.classList.add('selected');
+      });
     }
   },
   mounted() {
     this.setStorageCheckboxes();
+    document.querySelector('.option-tree').style.display = 'none';
   },
   components: {
     TreeNode

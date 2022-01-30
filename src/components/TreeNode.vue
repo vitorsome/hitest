@@ -1,6 +1,6 @@
 <template>
-  <div class="tree" :level="level">
-    <div class="option-tree" :style="{'margin-left': margin + 'px' }">
+  <div class="tree" :level="level" v-if="item != 'null'" v-show="item != ''">
+    <div class="option-tree" :style="{'padding-left': margin + 'px' }">
       <input type="checkbox" @change="changeTree" :id="id" />{{ item }}</div>
       <TreeNode v-for="child in list" :key="child.id" :list="child.children" :item="child.name" :margin="(child.level * 30)" :id="child.id" :level="child.level"></TreeNode>
   </div>
@@ -38,6 +38,7 @@ export default {
         checked: Array.from(document.querySelectorAll('input:checked')).map((checkbox) => checkbox.id),
         indeterminate: Array.from(document.querySelectorAll('input:indeterminate')).map((checkbox) => checkbox.id)
       }));
+      this.setStyleCheckedCheckboxes();
     },
     getParents(element) {
       let parents = [];
@@ -48,6 +49,13 @@ export default {
     },
     getChildren(element) {
       return element.parentNode.parentNode.querySelectorAll('[type=checkbox]');
+    },
+    setStyleCheckedCheckboxes() {
+      document.querySelectorAll('.selected').forEach(selected => selected.classList.remove('selected'));
+      let checkboxes = document.querySelectorAll('input:checked, input:indeterminate');
+      checkboxes.forEach((chkbox) => {
+        chkbox.parentNode.classList.add('selected');
+      });
     }
   }
 }
@@ -60,5 +68,9 @@ export default {
 
 .option-tree {
   display: flex;
+}
+
+.selected {
+  background-color: aquamarine;
 }
 </style>
